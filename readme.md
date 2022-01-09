@@ -1,13 +1,18 @@
 # Imagemagicのshadow
-![](https://raw.githubusercontent.com/yKesamaru/merge.png)
-
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph.png)
+こういうグラフを
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2.png)
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_no_shadow.png)
+こうしたい。
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_shadow.png)
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/output.png)
 
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)  
+Bashでかくとこうなる。
+```bash:-shadow
+convert input.png \
+    \( +clone -background black -shadow 20x4+1+1 \) \
+    +swap -background none -layers merge +repage \
+    output.png
+```
   
 # 環境
 
@@ -25,19 +30,6 @@ Distributor ID: Ubuntu
 Description: Ubuntu 18.04.6 LTS
 Release: 18.04
 Codename: bionic
-```
-
-```bash:-shadow
-convert input.png \( +clone -background black -shadow 100x3-1-1 \) +swap -background none -layers merge +repage output.png
-```
-
-```bash:other
-convert -page +4+4 input.png -alpha set \( +clone -background black -shadow 60x8+8+8 \) +swap -background none -mosaic "new.png"
-
-convert input.png -bordercolor white -border 13 \( +clone -background black -shadow 80x3+2+2 \) +swap -background white -layers merge +repage output.jpg
-
-convert -page +4+4 input.png -alpha set \( +clone -background black -shadow 60x8+8+8 \) \
-+swap -background none -mosaic "new.png"
 ```
 
 # Options
@@ -145,4 +137,4 @@ The operators -coalesce, -deconstruct, -flatten, and -mosaic are only aliases fo
 
 # Reference
 
-<https://imagemagick.org/script/command-line-options.php>
+https://imagemagick.org/script/command-line-options.php
