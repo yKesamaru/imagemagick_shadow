@@ -2,6 +2,9 @@
 ![](https://raw.githubusercontent.com/yKesamaru/merge.png)
 
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph.png)
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2.png)
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_no_shadow.png)
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_shadow.png)
 
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)  
   
