@@ -1,14 +1,14 @@
 # Imagemagicのshadow
-こういうグラフを
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2.png)
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_no_shadow.png)
-こうしたい。
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_shadow.png)
-こういう写真は
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/input.png)
-こうしたい。
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)
-
+こういうグラフを  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_no_shadow.png)  
+こうしたい。  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_shadow.png)  
+こういう写真は  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/input.png)  
+こうしたい。  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)  
+  
 
 Bashでかくとこうなる。
 ```bash:-shadow
