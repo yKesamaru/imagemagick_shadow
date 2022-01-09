@@ -4,14 +4,18 @@
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_no_shadow.png)
 こうしたい。
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_shadow.png)
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/output.png)
+こういう写真は
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/input.png)
+こうしたい。
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)
+
 
 Bashでかくとこうなる。
 ```bash:-shadow
 convert input.png \
-    \( +clone -background black -shadow 20x4+1+1 \) \
+    \( +clone -background black -shadow 10x20+1+1 \) \
     +swap -background none -layers merge +repage \
-    output.png
+    graph_2_shadow.png
 ```
   
 # 環境
