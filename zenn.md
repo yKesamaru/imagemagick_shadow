@@ -1,6 +1,6 @@
 # Imagemagicのshadow
 
-![](last.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)  
   
 # 環境
 ```bash:version
@@ -22,31 +22,31 @@ Codename:	bionic
 convert input.png \( +clone -background black -shadow 100x3-1-1 \) +swap -background none -layers merge +repage output.png
 ```
 # Options
-![](input.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/input.png)  
   
 ```bash
 convert input.png -shadow 80% shadow_80.png
 ```
 > -shadow percent-opacity{xsigma}{+-}x{+-}y{%}  
 
-![](shadow_80.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/shadow_80_screen_capture.png)  
   
 ```bash
 convert input.png -shadow 80%x3 shadow_80x3.png
 ```
-![](shadow_80x3.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/shadow_80x3_screen_capture.png)  
 
 ```bash
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) clone.png
 ```
 
-![](clone-0.png)  
-![](clone-1.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/clone-0.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/clone-1.png)  
 
 ```bash
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) -layers merge +repage merge.png
 ```
-![](merge.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/merge.png)  
 
 ```bash
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) -layers merge +repage +swap swap.png
@@ -57,17 +57,17 @@ convert-im6.q16: no such image `input.png' @ error/mogrify.c/MogrifyImageList/87
 ```bash
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -layers merge +repage swap.png
 ```
-![](swap.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/swap.png)  
 
 ```bash
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -background none -layers merge +repage bg_none.png
 ```
-![](bg_none.png)
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/bg_none.png)
 
 ```bash
 convert input.png \( +clone -background black -shadow 100x3-1-1 \) +swap -background none -layers merge +repage last.png
 ```
-![](last.png)
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)
 
 -clone index(s)
 
