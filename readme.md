@@ -1,24 +1,23 @@
-# Imagemagicのshadow
-こういうグラフを  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2.png)  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_no_shadow.png)  
-こうしたい。  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_shadow.png)  
-こういう写真は  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/input.png)  
-こうしたい。  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)  
+# 動機
+README.mdを作る際、Imageにシャドーをつけたくなるときがある。  
   
-
-Bashでかくとこうなる。
+## 変更前  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_no_shadow.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/input.png)  
+  
+## 変更後
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/graph_2_shadow.png)  
+![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/last.png)  
+# 該当コード
 ```bash:-shadow
-convert input.png \
-    \( +clone -background black -shadow 10x20+1+1 \) \
+convert *.png \
+    \( +clone -background black -shadow 10x10+0+0 \) \
     +swap -background none -layers merge +repage \
-    graph_2_shadow.png
+    graph_10x10+0+0.png
 ```
   
-# 環境
+# コードの中身
+## 環境
 
 ```bash:version
 convert -version
