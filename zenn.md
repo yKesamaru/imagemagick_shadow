@@ -1,3 +1,24 @@
+:::details TOC
+- [動機](#動機)
+  - [変更前](#変更前)
+  - [変更後](#変更後)
+- [方法](#方法)
+- [シェルスクリプトの中身](#シェルスクリプトの中身)
+  - [環境](#環境)
+- [Options](#options)
+  - [元画像](#元画像)
+  - [`-shadow`](#-shadow)
+  - [`-shadow`の`sigma`値](#-shadowのsigma値)
+  - [`-clone`](#-clone)
+  - [`-layers merge`](#-layers-merge)
+  - [`-swap`](#-swap)
+  - [`-background color`](#-background-color)
+  - [調整](#調整)
+- [Reference](#reference)
+  - [Desktop entry](#desktop-entry)
+  - [Imagemagick](#imagemagick)
+  
+:::  
 # 動機  
 README.mdを作る際、Imageにシャドーをつけたい。  
 Desktop entryとして登録して右クリックから複数ファイルを選択できるようにしたい。  
@@ -23,8 +44,9 @@ NoDisplay=true
 MimeType=image/jpeg;image/png;  
 Terminal=false  
 ```  
+`%F`は複数の引数（ここではファイル）を意味します。`%f`は単一のファイルです。`%F`にする場合はシェルスクリプトで複数ファイルに対応するようにしなければなりません。ファイルパスは絶対パスにしてください。  
   
-# コードの中身  
+# シェルスクリプトの中身  
 ```bash:image_shadow.sh  
 #!/bin/bash
 
@@ -45,7 +67,7 @@ do
   shift
 done
 ```  
-`${file_path}/${new_name}`としないと`$HOME`にファイルができてしまう。
+`${file_path}/${new_name}`としないと`$HOME`にファイルができてしまう。  
 ## 環境  
 ```bash  
 convert -version  
@@ -90,7 +112,7 @@ convert input.png -shadow 80%x3 shadow_80x3.png
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) clone.png  
 ```  
-`-clone`によって与えられたイメージを複製する。ファイルは2つ出来る。  
+`-clone`によって与えられたイメージを複製する。ファイルは2つ出来る。`+clone`は最後に与えられたイメージを単純に複製する。()でくくる。  
 :::details -clone index(s)   man該当箇所  
 Make a clone of an image (or images).  
 
@@ -107,7 +129,7 @@ The +clone will simply make a copy of the last image in the image sequence, and 
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) -layers merge +repage merge.png  
 ```  
-レイヤーをマージする。
+レイヤーをマージする。`merge`は画像の端がクロップされることを防ぐ。`+repage`で仮想キャンバスのメタデータを取り除く。  
 :::details -layers method   man該当箇所  
 Handle multiple images forming a set of image layers or animation frames.  
 
@@ -150,7 +172,7 @@ For example, -swap 0,2 swaps the first and the third images in the current image
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -background none -layers merge +repage bg_none.png  
 ```  
-デフォルトは白。  
+デフォルトは白。`none`を指定することで色を削除する。  
 :::details -background color   man該当箇所  
 Set the background color.  
   
