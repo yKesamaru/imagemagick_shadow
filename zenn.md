@@ -23,29 +23,29 @@ NoDisplay=true
 MimeType=image/jpeg;image/png;  
 Terminal=false  
 ```  
-
   
 # コードの中身  
 ```bash:image_shadow.sh  
-#!/bin/bash  
+#!/bin/bash
 
-while (( $# > 0 ))  
-do  
-  case $1 in  
-  *.png | *.jpg | *.jpeg)  
-    old_name=$(basename "$1")  
-    file_path=$(dirname "$1")  
-    new_name=shadow_"$old_name"  
-    convert "$new_name" \  
-      \( +clone -background black -shadow 10x10+0+0 \) \  
-      +swap -background none -layers merge +repage \  
-      "${file_path}/${new_name}"  
-    ;;  
-  esac  
-  shift  
-done  
+while (( $# > 0 ))
+do
+  case $1 in
+  *.png | *.jpg | *.jpeg)
+    file_path=$(dirname "$1")
+    old_name=$(basename "$1")
+    new_name=shadow_"$old_name"
+    cp "$1" "$new_name"
+    convert "$new_name" \
+      \( +clone -background black -shadow 10x10+0+0 \) \
+      +swap -background none -layers merge +repage \
+      "${file_path}/${new_name}"
+    ;;
+  esac
+  shift
+done
 ```  
-
+`${file_path}/${new_name}`としないと`$HOME`にファイルができてしまう。
 ## 環境  
 ```bash  
 convert -version  
@@ -73,7 +73,8 @@ convertコマンドのオプションについてざっくりとメモします�
 ```bash  
 convert input.png -shadow 80% shadow_80.png  
 ```  
-:::details -shadow  
+引数は数値だけでも良いし%をつけてもよい。  
+:::details -shadow   man該当箇所  
 percent-opacity{xsigma}{+-}x{+-}y{%}  
 :::  
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/shadow_80_screen_capture.png)  
@@ -82,13 +83,15 @@ percent-opacity{xsigma}{+-}x{+-}y{%}
 ```bash  
 convert input.png -shadow 80%x3 shadow_80x3.png  
 ```  
+`Sigma`値は度合いを表す。数値が大きいほどblurが強くなる。  
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/shadow_80x3_screen_capture.png)  
 
 ## `-clone`  
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) clone.png  
 ```  
-:::details -clone index(s)  
+`-clone`によって与えられたイメージを複製する。ファイルは2つ出来る。  
+:::details -clone index(s)   man該当箇所  
 Make a clone of an image (or images).  
 
 Inside parenthesis (where the operator is normally used) it will make a clone of the images from the last 'pushed' image sequence, and adds them to the end of the current image sequence. Outside parenthesis (not recommended) it clones the images from the current image sequence.  
@@ -104,13 +107,18 @@ The +clone will simply make a copy of the last image in the image sequence, and 
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) -layers merge +repage merge.png  
 ```  
-:::details -layers method  
+レイヤーをマージする。
+:::details -layers method   man該当箇所  
 Handle multiple images forming a set of image layers or animation frames.  
 
 Perform various image operation methods to a ordered sequence of images which may represent either a set of overlaid 'image layers', a GIF disposal animation, or a fully-'coalesced' animation sequence.  
+  
 merge  As 'flatten' method but merging all the given image layers to create a new layer image just large enough to hold all the image without clipping or extra space. The new images virtual offset will preserve the position of the new layer, even if this offset is negative. The virtual canvas size of the first image is preserved.  
+  
 mosaic  As 'flatten' method but expanding the initial canvas size of the first image in a positive direction only so as to hold all the image layers. However as a virtual canvas is 'locked' to the origin, by its own definition, image layers with a negative offsets will still become clipped by the top and left edges. See 'merge' or 'trim-bounds' if this could be a problem.  
+  
 Caution is advised when handling image layers with negative offsets as few image file formats handle them correctly. Following this operation method with +repage will remove the layer offset, and create an image in which all the overlaid image positions relative to each other is preserved, though not necessarily exactly where you specified them.  
+  
 Use +repage to completely remove/reset the virtual canvas meta-data from the images.  
 
 To print a complete list of layer types, use -list layers.  
@@ -131,30 +139,31 @@ convert-im6.q16: no such image `input.png' @ error/mogrify.c/MogrifyImageList/87
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -layers merge +repage swap.png  
 ```  
-:::details -swap index,index  
+:::details -swap index,index   man該当箇所  
 Swap the positions of two images in the image sequence.  
 
 For example, -swap 0,2 swaps the first and the third images in the current image sequence. Use +swap to switch the last two images in the sequence.  
 :::  
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/swap.png)  
 
-## `-background`  
+## `-background color`  
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -background none -layers merge +repage bg_none.png  
 ```  
-:::details -background color  
+デフォルトは白。  
+:::details -background color   man該当箇所  
 Set the background color.  
-
+  
 The color is specified using the format described under the -fill option. The default background color (if none is specified or found in the image) is white.  
 :::  
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/bg_none.png)  
 
 ## 調整  
 ```bash  
-convert input.png \( +clone -background black -shadow 100x3-1-1 \) +swap -background none -layers merge +repage last.png  
+convert input.png \( +clone -background black -shadow 10x10+0+0 \) +swap -background none -layers merge +repage last.png  
 ```  
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/last.png)  
-
+期待通りにできました。  
 # Reference  
 ## Desktop entry  
 https://specifications.freedesktop.org/desktop-entry-spec/latest/  
