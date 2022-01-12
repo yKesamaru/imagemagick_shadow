@@ -87,6 +87,8 @@ lsb_release -a
 
 # Options  
 convertコマンドのオプションについてざっくりとメモします。  
+**リファレンス**  
+https://imagemagick.org/script/command-line-options.php  
 
 ## 元画像  
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/input.png)  
@@ -96,7 +98,7 @@ convertコマンドのオプションについてざっくりとメモします�
 convert input.png -shadow 80% shadow_80.png  
 ```  
 引数は数値だけでも良いし%をつけてもよい。  
-:::details -shadow   man該当箇所  
+:::details -shadow   リファレンス該当箇所  
 percent-opacity{xsigma}{+-}x{+-}y{%}  
 :::  
 ![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/shadow_80_screen_capture.png)  
@@ -113,7 +115,7 @@ convert input.png -shadow 80%x3 shadow_80x3.png
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) clone.png  
 ```  
 `-clone`によって与えられたイメージを複製する。ファイルは2つ出来る。`+clone`は最後に与えられたイメージを単純に複製する。()でくくる。  
-:::details -clone index(s)   man該当箇所  
+:::details -clone index(s)   リファレンス該当箇所  
 Make a clone of an image (or images).  
 
 Inside parenthesis (where the operator is normally used) it will make a clone of the images from the last 'pushed' image sequence, and adds them to the end of the current image sequence. Outside parenthesis (not recommended) it clones the images from the current image sequence.  
@@ -130,7 +132,7 @@ The +clone will simply make a copy of the last image in the image sequence, and 
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) -layers merge +repage merge.png  
 ```  
 レイヤーをマージする。`merge`は画像の端がクロップされることを防ぐ。`+repage`で仮想キャンバスのメタデータを取り除く。  
-:::details -layers method   man該当箇所  
+:::details -layers method   リファレンス該当箇所  
 Handle multiple images forming a set of image layers or animation frames.  
 
 Perform various image operation methods to a ordered sequence of images which may represent either a set of overlaid 'image layers', a GIF disposal animation, or a fully-'coalesced' animation sequence.  
@@ -161,7 +163,7 @@ convert-im6.q16: no such image `input.png' @ error/mogrify.c/MogrifyImageList/87
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -layers merge +repage swap.png  
 ```  
-:::details -swap index,index   man該当箇所  
+:::details -swap index,index   リファレンス該当箇所  
 Swap the positions of two images in the image sequence.  
 
 For example, -swap 0,2 swaps the first and the third images in the current image sequence. Use +swap to switch the last two images in the sequence.  
@@ -173,7 +175,7 @@ For example, -swap 0,2 swaps the first and the third images in the current image
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -background none -layers merge +repage bg_none.png  
 ```  
 デフォルトは白。`none`を指定することで色を削除する。  
-:::details -background color   man該当箇所  
+:::details -background color   リファレンス該当箇所  
 Set the background color.  
   
 The color is specified using the format described under the -fill option. The default background color (if none is specified or found in the image) is white.  

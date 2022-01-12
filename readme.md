@@ -23,15 +23,15 @@
 README.mdを作る際、Imageにシャドーをつけたい。  
 Desktop entryとして登録して右クリックから複数ファイルを選択できるようにしたい。  
   
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/shadow_click.png)  
+![](img/shadow_click.png)  
 
 ## 変更前  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/graph_2_no_shadow.png)  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/input.png)  
+![](img/graph_2_no_shadow.png)  
+![](img/input.png)  
   
 ## 変更後  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/graph_2_shadow.png)  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/last.png)  
+![](img/graph_2_shadow.png)  
+![](img/last.png)  
 # 方法  
 `$HOME/.local/share/applications/`以下に`.desktop`ファイルとして実行権限をつけたシェルスクリプトを作成する。^[使用するファイルマネージャによって表示されるファイル名が異なる]  
 ```bash:SHADOW.desktop  
@@ -67,7 +67,7 @@ do
   shift
 done
 ```  
-`${file_path}/${new_name}`としないと`$HOME`にファイルができてしまう。
+`${file_path}/${new_name}`としないと`$HOME`にファイルができてしまう。  
 ## 環境  
 ```bash  
 convert -version  
@@ -87,33 +87,35 @@ lsb_release -a
 
 # Options  
 convertコマンドのオプションについてざっくりとメモします。  
+**リファレンス**  
+https://imagemagick.org/script/command-line-options.php  
 
 ## 元画像  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/input.png)  
+![](img/input.png)  
 
 ## `-shadow`  
 ```bash  
 convert input.png -shadow 80% shadow_80.png  
 ```  
 引数は数値だけでも良いし%をつけてもよい。  
-:::details -shadow   man該当箇所  
+:::details -shadow   リファレンス該当箇所  
 percent-opacity{xsigma}{+-}x{+-}y{%}  
 :::  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/shadow_80_screen_capture.png)  
+![](img/shadow_80_screen_capture.png)  
 
 ## `-shadow`の`sigma`値  
 ```bash  
 convert input.png -shadow 80%x3 shadow_80x3.png  
 ```  
 `Sigma`値は度合いを表す。数値が大きいほどblurが強くなる。  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/shadow_80x3_screen_capture.png)  
+![](img/shadow_80x3_screen_capture.png)  
 
 ## `-clone`  
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) clone.png  
 ```  
 `-clone`によって与えられたイメージを複製する。ファイルは2つ出来る。`+clone`は最後に与えられたイメージを単純に複製する。()でくくる。  
-:::details -clone index(s)   man該当箇所  
+:::details -clone index(s)   リファレンス該当箇所  
 Make a clone of an image (or images).  
 
 Inside parenthesis (where the operator is normally used) it will make a clone of the images from the last 'pushed' image sequence, and adds them to the end of the current image sequence. Outside parenthesis (not recommended) it clones the images from the current image sequence.  
@@ -122,15 +124,15 @@ Specify the image by its index in the sequence. The first image is index 0. Nega
 
 The +clone will simply make a copy of the last image in the image sequence, and is thus equivalent to using an argument of '−1'.  
 :::  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/clone-0.png)  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/clone-1.png)  
+![](img/clone-0.png)  
+![](img/clone-1.png)  
 
 ## `-layers merge`  
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) -layers merge +repage merge.png  
 ```  
 レイヤーをマージする。`merge`は画像の端がクロップされることを防ぐ。`+repage`で仮想キャンバスのメタデータを取り除く。  
-:::details -layers method   man該当箇所  
+:::details -layers method   リファレンス該当箇所  
 Handle multiple images forming a set of image layers or animation frames.  
 
 Perform various image operation methods to a ordered sequence of images which may represent either a set of overlaid 'image layers', a GIF disposal animation, or a fully-'coalesced' animation sequence.  
@@ -147,7 +149,7 @@ To print a complete list of layer types, use -list layers.
 
 The operators -coalesce, -deconstruct, -flatten, and -mosaic are only aliases for the above methods and may be deprecated in the future. Also see -page, -repage operators, the -compose setting, and the GIF -dispose and -delay settings.  
 :::  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/merge.png)  
+![](img/merge.png)  
 
 ## `-swap`  
 ```bash  
@@ -161,30 +163,30 @@ convert-im6.q16: no such image `input.png' @ error/mogrify.c/MogrifyImageList/87
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -layers merge +repage swap.png  
 ```  
-:::details -swap index,index   man該当箇所  
+:::details -swap index,index   リファレンス該当箇所  
 Swap the positions of two images in the image sequence.  
 
 For example, -swap 0,2 swaps the first and the third images in the current image sequence. Use +swap to switch the last two images in the sequence.  
 :::  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/swap.png)  
+![](img/swap.png)  
 
 ## `-background color`  
 ```bash  
 convert input.png \( +clone -background black -shadow 100x3+10+10 \) +swap -background none -layers merge +repage bg_none.png  
 ```  
 デフォルトは白。`none`を指定することで色を削除する。  
-:::details -background color   man該当箇所  
+:::details -background color   リファレンス該当箇所  
 Set the background color.  
   
 The color is specified using the format described under the -fill option. The default background color (if none is specified or found in the image) is white.  
 :::  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/bg_none.png)  
+![](img/bg_none.png)  
 
 ## 調整  
 ```bash  
 convert input.png \( +clone -background black -shadow 10x10+0+0 \) +swap -background none -layers merge +repage last.png  
 ```  
-![](https://raw.githubusercontent.com/yKesamaru/imagemagick_shadow/master/img/last.png)  
+![](img/last.png)  
 期待通りにできました。  
 # Reference  
 ## Desktop entry  
